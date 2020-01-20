@@ -15,12 +15,51 @@ public class InputShow : ComponentSystem
 {
     protected override void OnUpdate()
     {
-        bool actionOne = false;
-        bool actionTwo = false;
-
 #if UNITY_DOTSPLAYER
             var Input = World.GetExistingSystem<InputSystem>();
 #endif
+
+        var gameStarted = false;
+        var anyKeyPressed = false;
+#if !UNITY_DOTSPLAYER
+        anyKeyPressed = Input.anyKey || Input.touchCount > 0 || Input.GetMouseButton(0);
+#else
+        anyKeyPressed = Input.GetKeyDown(KeyCode.Space) || Input.TouchCount() > 0 || Input.GetMouseButton(0);
+#endif
+        var justStarted = false;
+        Entities.ForEach((ref GameStatus gs) =>
+        {
+            if (!gs.started && anyKeyPressed)
+            {
+                gs.started = true;
+                justStarted = true;
+            }
+            gameStarted = gs.started;
+        });
+        if (justStarted)
+        {
+            //reset
+            Entities.WithAll<Player>().ForEach((ref Dead dead) =>
+            {
+                dead.IsDead = true;
+            });
+            Entities.ForEach((ref ObstacleTag ot) =>
+            {
+                ot.StartTime = Time.ElapsedTime;
+            });
+            Entities.ForEach((ref GameStatus gs) =>
+            {
+                gs.startTime = Time.ElapsedTime;
+            });
+        }
+        //do not get input if the game is not started
+        if (!gameStarted)
+            return;
+
+
+
+        bool actionOne = false;
+        bool actionTwo = false;
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             Entities.WithAll<Player>().ForEach((ref PlayerInput pi) => {

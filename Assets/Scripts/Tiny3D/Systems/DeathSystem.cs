@@ -23,6 +23,11 @@ public class DeathSystem : ComponentSystem
                     confusion.rotate = false;
                     confusion.speedUpTime = false;
                     confusion.slowDownTime = false;
+                    confusion.fakeRotate = false;
+                });
+                Entities.ForEach((ref GameStatus gs) =>
+                {
+                    //gs.started = false;
                 });
 
                 //destroy Obstacles
@@ -41,12 +46,18 @@ public class DeathSystem : ComponentSystem
                 Entities.ForEach((ref Confusion confusion) =>
                 {
                     //reset status
+                    confusion.running = true;
                     confusion.currentElapsedTime = 0;
                     confusion.wasGoingDown = true;
-                    confusion.running = true;
                     confusion.rotate = false;
                     confusion.speedUpTime = false;
                     confusion.slowDownTime = false;
+                    confusion.fakeRotate = false;
+                });
+                Entities.ForEach((ref GameStatus gs) =>
+                {
+                    //gs.started = true;
+                    gs.startTime = Time.ElapsedTime;
                 });
                 Entities.ForEach((ref CubeMovementStatus cms) =>
                 {

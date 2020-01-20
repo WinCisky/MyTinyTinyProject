@@ -12,6 +12,7 @@ public class ObstacleMovementSystem : JobComponentSystem
     //[BurstCompile]
     struct ObstacleMovementSystemJob : IJobForEach<Translation, ObstacleTag>
     {
+        public bool gameStarted;
         public double elapsedTime;
         public double deltaTime;
         public float2 playerPosition;
@@ -20,7 +21,7 @@ public class ObstacleMovementSystem : JobComponentSystem
 
         public void Execute(ref Translation translation, ref ObstacleTag ot)
         {
-            if (true)
+            if (gameStarted)
             {
                 //slow down if necessary
                 ot.StartTime += /*(movingDirection > 0 ? 1 : -1)*/ 1 * (deltaTime - (deltaTime * abs(movingDirection)));
@@ -64,6 +65,12 @@ public class ObstacleMovementSystem : JobComponentSystem
     
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
     {
+        var gameStart = false;
+        Entities.ForEach((in GameStatus gs) =>
+        {
+            gameStart = gs.started;
+        }).Run();
+
         //get player position
         var playerPos = new float2(0, 0);
         Entities.WithAll<Player>().ForEach((ref Translation pos) =>
@@ -87,6 +94,7 @@ public class ObstacleMovementSystem : JobComponentSystem
         //move cubes according to player pos
         var job = new ObstacleMovementSystemJob
         {
+            gameStarted = gameStart,
             elapsedTime = Time.ElapsedTime,
             playerPosition = playerPos,
             movingDirection = movingDir,

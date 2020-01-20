@@ -19,5 +19,9 @@
         "Scenes": [
             "GlobalObjectId_V1-1-1b436f617d6d3bb49aba65ff9f2581c7-102900000-0"
         ]
+    }, {
+        "$type": "Unity.Build.Common.GeneralSettings, Unity.Build.Common",
+        "ProductName": "MyTinyTinyProject",
+        "CompanyName": "sSimo"
     }]
 }

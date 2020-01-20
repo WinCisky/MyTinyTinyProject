@@ -12,7 +12,7 @@ It's barebone (only left and right input) but works well enough (could definitel
 Then, since I wanted the player to be able to move infinitely along the x axis I needed the camera to follow the player.
 - FollowPlayerSystem get the player pos and the camera pos and lerp between them
 
-Finally I wanted to create a path to follow for the player so I created a grid of instances of a prefab, and with only 30(x) * 2 * 30(y) * 2 (=3600) instances I was able to cover the entire screen (the rendering is fixed to 1920*1080 no matter what) with a bit of margin so moving the cubes once they become too much far from the player I was able to create the illusion of infinite cubes indipendently of the player movement.
+Finally I wanted to create a path to follow for the player so I created a grid of instances of a prefab, and with only 30(x) * 2 * 30(y) * 2 (=3600) instances I was able to cover the entire screen (the rendering is fixed to 1920*1080 no matter what) with a bit of margin, so I was able to create the illusion of infinite cubes indipendently of the player movement moving the cubes once they become too much far from the player.
 To hide a cube I simply set its z position @ -100 (behind the camera).
 ![TinyDev](https://user-images.githubusercontent.com/15329035/72682762-f4081380-3ad0-11ea-8932-442fd849eb40.png)
 >I know that there must be a better solution but this was the easiest one since it keeps the position in synch.
@@ -30,6 +30,10 @@ Finally I needed to check if the player is colliding with something
 So i created some paths to make the game more interesting, I used the noise function to decide whenever or not the cube on pos(x,y) has to be shown
 - SpawnerSystem -> set the position with noise and store the initial position in the ObstacleTag Component
 
+At this point the game was starting to get interesting, however after a few tests it was getting boring. So I decided to introduce some "confusion" to the game mechanics.
+I added a countdown that every fixed amount of time decides to change the gameplay (reversing the moving direction or rotating the map).
+- Confusion Component -> stores the Confusion System status
+- Confusion System -> responsable for changing the gameplay, slow down the movement (modifying the ObstacleTag Component) then randomly decides between rotating the map, fake rotating it or swapping the movement direction.
 
 
 ## TODO:

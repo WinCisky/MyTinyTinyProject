@@ -14,7 +14,9 @@
         "Unity.Tiny.RendererExtras",
         "Unity.Tiny.Main",
         "Unity.Tiny.EntryPoint",
-        "Unity.Tiny.Audio"
+        "Unity.Tiny.Audio",
+        "Unity.Jobs",
+        "Unity.Collections"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

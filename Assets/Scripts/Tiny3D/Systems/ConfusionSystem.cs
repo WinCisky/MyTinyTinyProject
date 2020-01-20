@@ -28,7 +28,7 @@ public class ConfusionSystem : ComponentSystem
         var elapsedTime = Time.ElapsedTime;
         Entities.ForEach((ref Confusion confusion) =>
         {
-            if ((!confusion.slowDownTime && !confusion.speedUpTime) && !confusion.rotate)
+            if (((!confusion.slowDownTime && !confusion.speedUpTime) && !confusion.rotate) && ! confusion.fakeRotate)
             {
                 confusion.currentElapsedTime += deltaTime;
                 //Debug.Log(confusion.currentElapsedTime + " " + confusion.confusionCooldown);
@@ -58,42 +58,29 @@ public class ConfusionSystem : ComponentSystem
                     //start speed up or rotate
                     if (finished)
                     {
-                        //FOR DEVELOPMENT -> only rotate
-                        confusion.rotate = true;
-                        //set target rotation
-                        confusion.targetRotation = 0;
-
-                        //DEVELOPMENT BAN
-                        /*
                         //50% chance of rotating
                         if (noise.cnoise(new float2((float)elapsedTime, (float)elapsedTime) * 0.21F) > 0)
                         {
-                            if (noise.cnoise(new float2((float)elapsedTime, (float)elapsedTime) * 0.22F) > 0)
-                            {
-                                confusion.speedUpTime = true;
-                            }
-                            else
-                            {
-                                //TODO: something different
-                                confusion.speedUpTime = true;
-                            }
+                            //swap
+                            confusion.speedUpTime = true;
                         }
                         else// rotations
                         {
                             if (noise.cnoise(new float2((float)elapsedTime, (float)elapsedTime) * 0.22F) > 0)
                             {
+                                //fake rotation does nothing
                                 confusion.fakeRotate = true;
                                 //set target rotation
                                 confusion.targetRotation = 0;
                             }
                             else
                             {
+                                //real rotation rotates all cubes of 90 degrees counter-clockwise
                                 confusion.rotate = true;
                                 //set target rotation
                                 confusion.targetRotation = 0;
                             }
                         }
-                        */
 
                         confusion.slowDownTime = false;
                         //swap with reverse
@@ -131,7 +118,6 @@ public class ConfusionSystem : ComponentSystem
                 {
 
                     confusion.targetRotation++;
-                    //TODO: logic for turning all entities -> kinda complicated, such cool tho
                     Entities.WithAll<ObstacleTag>().ForEach((ref Rotation rotation) =>
                     {
                         rotation.Value = math.mul(rotation.Value, quaternion.RotateZ(math.radians(1)));
@@ -160,7 +146,6 @@ public class ConfusionSystem : ComponentSystem
                             ot.targetPos = new float2(target.x, ot.startPos.y + (target.y - translation.Value.y));
                         });
                     }
-                    //to check
                     confusion.targetRotation++;
                     var playerPos = new float2(0, 0);
                     Entities.WithAll<Player>().ForEach((ref Translation translation) =>
