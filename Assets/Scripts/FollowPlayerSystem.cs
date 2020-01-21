@@ -8,24 +8,30 @@ using Unity.Tiny.Input;
 
 #endif
 [AlwaysSynchronizeSystem]
-public class FollowPlayerSystem : JobComponentSystem
+public class FollowPlayerSystem : ComponentSystem
 {
-    protected override JobHandle OnUpdate(JobHandle inputDependencies)
+    protected override void OnUpdate()
     {
         var followSpeed = 3;
         var offset = new float3(0, 0, -25);
         var deltaTime = Time.DeltaTime;
-        Entities.WithoutBurst().WithAll<Player>().ForEach((ref Translation translation) =>
+        var cameraPos = new float3(0, 0, 0); 
+        Entities.WithAll<Player>().ForEach((ref Translation translation) =>
         {
 #if UNITY_DOTSPLAYER
             var cameraEntity = GetSingletonEntity<Camera>();
-            var cameraPos = EntityManager.GetComponentData<Translation>(cameraEntity).Value;
+            cameraPos = EntityManager.GetComponentData<Translation>(cameraEntity).Value;
             EntityManager.SetComponentData(cameraEntity, new Translation { Value = math.lerp(cameraPos, translation.Value + offset, deltaTime * followSpeed) });
 #else
-            var mainCamPos = UnityEngine.Camera.main.transform;
-            mainCamPos.position = math.lerp(mainCamPos.position, translation.Value + offset, deltaTime * followSpeed);
+            cameraPos = UnityEngine.Camera.main.transform.position;
+            cameraPos = math.lerp(cameraPos, translation.Value + offset, deltaTime * followSpeed);
 #endif
-        }).Run();
-        return default;
+        });
+
+        //let the ui follow the player
+        Entities.ForEach((ref Translation translation, ref Digit d) =>
+        {
+            translation.Value = cameraPos + d.offset;
+        });
     }
 }

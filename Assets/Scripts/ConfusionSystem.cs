@@ -58,25 +58,10 @@ public class ConfusionSystem : ComponentSystem
                     //start speed up or rotate
                     if (finished)
                     {
-                        //FOR DEVELOPMENT -> only rotate
-                        confusion.rotate = true;
-                        //set target rotation
-                        confusion.targetRotation = 0;
-
-                        //DEVELOPMENT BAN
-                        /*
                         //50% chance of rotating
                         if (noise.cnoise(new float2((float)elapsedTime, (float)elapsedTime) * 0.21F) > 0)
                         {
-                            if (noise.cnoise(new float2((float)elapsedTime, (float)elapsedTime) * 0.22F) > 0)
-                            {
-                                confusion.speedUpTime = true;
-                            }
-                            else
-                            {
-                                //TODO: something different
-                                confusion.speedUpTime = true;
-                            }
+                            confusion.speedUpTime = true;
                         }
                         else// rotations
                         {
@@ -93,7 +78,6 @@ public class ConfusionSystem : ComponentSystem
                                 confusion.targetRotation = 0;
                             }
                         }
-                        */
 
                         confusion.slowDownTime = false;
                         //swap with reverse

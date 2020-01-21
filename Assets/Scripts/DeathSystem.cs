@@ -25,6 +25,11 @@ public class DeathSystem : ComponentSystem
                     confusion.slowDownTime = false;
                 });
 
+                Entities.ForEach((ref GameStatus gs) =>
+                {
+                    gs.gameStarted = false;
+                });
+
                 //destroy Obstacles
                 var obj = GetEntityQuery(new ComponentType[] { typeof(ObstacleTag) });
                 EntityManager.DestroyEntity(obj);
@@ -55,6 +60,11 @@ public class DeathSystem : ComponentSystem
                 Entities.ForEach((ref Prefabs prefabs) =>
                 {
                     EntityManager.Instantiate(prefabs.Spawner);
+                });
+                Entities.ForEach((ref GameStatus gs) =>
+                {
+                    gs.gameStarted = true;
+                    gs.startTime = Time.ElapsedTime;
                 });
             }
         });
