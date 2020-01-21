@@ -5,4 +5,5 @@ using Unity.Mathematics;
 public struct ScoreDigit : IComponentData
 {
     public float3 offset;
+    public int digit;
 }

@@ -6,7 +6,7 @@ public class GameStatusSystem : ComponentSystem
     {
         Entities.ForEach((ref GameStatus gs) =>
         {
-            gs.score = ((int)(Time.ElapsedTime - gs.startTime) % 10);
+            gs.score = (int)(Time.ElapsedTime - gs.startTime);
         });
     }
 }
