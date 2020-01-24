@@ -1264,16 +1264,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7181145658595369181}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60471babf7df6b640a93fc4bba5653b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fc4b3815bfd31045a9f2e75c416d413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
   shownValue: 0
   digit: 1
   offset:
-    x: -0.8
-    y: 10
-    z: 20
+    x: 0
+    y: 0
+    z: 0
   s1_1: {fileID: 7181145658595369182}
   s2_1: {fileID: 7181145658595369183}
   s3_1: {fileID: 7181145658595369120}

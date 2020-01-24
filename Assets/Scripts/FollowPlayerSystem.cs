@@ -31,7 +31,8 @@ public class FollowPlayerSystem : ComponentSystem
         //let the ui follow the player
         Entities.ForEach((ref Translation translation, ref Digit d) =>
         {
-            translation.Value = cameraPos + d.offset;
+            if (!d.mainMenu)
+                translation.Value = cameraPos + d.offset;
         });
     }
 }

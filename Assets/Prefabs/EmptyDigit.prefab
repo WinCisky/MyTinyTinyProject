@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6440626449220480580
+--- !u!1001 &2541910079488742787
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,17 +10,17 @@ PrefabInstance:
     - target: {fileID: 7181145658595369133, guid: d7ad459b1c820644cb8596bcb216b5e9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7181145658595369133, guid: d7ad459b1c820644cb8596bcb216b5e9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7181145658595369133, guid: d7ad459b1c820644cb8596bcb216b5e9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7181145658595369133, guid: d7ad459b1c820644cb8596bcb216b5e9,
         type: 3}
@@ -65,12 +65,22 @@ PrefabInstance:
     - target: {fileID: 7181145658595369180, guid: d7ad459b1c820644cb8596bcb216b5e9,
         type: 3}
       propertyPath: digit
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7181145658595369180, guid: d7ad459b1c820644cb8596bcb216b5e9,
+        type: 3}
+      propertyPath: shownValue
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 7181145658595369180, guid: d7ad459b1c820644cb8596bcb216b5e9,
+        type: 3}
+      propertyPath: mainMenu
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7181145658595369181, guid: d7ad459b1c820644cb8596bcb216b5e9,
         type: 3}
       propertyPath: m_Name
-      value: Digit (2)
+      value: EmptyDigit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7ad459b1c820644cb8596bcb216b5e9, type: 3}

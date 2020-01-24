@@ -24,11 +24,20 @@ public class ConfusionSystem : ComponentSystem
 
     protected override void OnUpdate()
     {
+        var started = false;
+        Entities.ForEach((ref GameStatus gs) =>
+        {
+            started = gs.gameStarted;
+        });
+
+        if (!started)
+            return;
+
         var deltaTime = Time.DeltaTime;
         var elapsedTime = Time.ElapsedTime;
         Entities.ForEach((ref Confusion confusion) =>
         {
-            if ((!confusion.slowDownTime && !confusion.speedUpTime) && !confusion.rotate)
+            if (((!confusion.slowDownTime && !confusion.speedUpTime) && !confusion.rotate) && !confusion.fakeRotate)
             {
                 confusion.currentElapsedTime += deltaTime;
                 //Debug.Log(confusion.currentElapsedTime + " " + confusion.confusionCooldown);

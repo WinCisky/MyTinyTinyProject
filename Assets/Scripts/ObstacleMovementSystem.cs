@@ -17,10 +17,11 @@ public class ObstacleMovementSystem : JobComponentSystem
         public float2 playerPosition;
         public float movingDirection;
         public bool isRotating;
+        public bool started;
 
         public void Execute(ref Translation translation, ref ObstacleTag ot)
         {
-            if (true)
+            if (started)
             {
                 //slow down if necessary
                 ot.StartTime += /*(movingDirection > 0 ? 1 : -1)*/ 1 * (deltaTime - (deltaTime * abs(movingDirection)));
@@ -59,6 +60,17 @@ public class ObstacleMovementSystem : JobComponentSystem
                     }
                 }
             }
+            else
+            {
+                ot.StartTime = elapsedTime + 9;
+                translation.Value =
+                    new float3(
+                        ot.startPos.x,
+                        ((-(float)(elapsedTime - ot.StartTime) % 40) *
+                        ot.MovementSpeed + ot.startPos.y),
+                        ot.startPos.z
+                    );
+            }
         }
     }
     
@@ -84,6 +96,12 @@ public class ObstacleMovementSystem : JobComponentSystem
             rotating = conf.rotate;
         }).Run();
 
+        var started = false;
+        Entities.ForEach((ref GameStatus gs) =>
+        {
+            started = gs.gameStarted;
+        }).Run();
+
         //move cubes according to player pos
         var job = new ObstacleMovementSystemJob
         {
@@ -91,7 +109,8 @@ public class ObstacleMovementSystem : JobComponentSystem
             playerPosition = playerPos,
             movingDirection = movingDir,
             deltaTime = Time.DeltaTime,
-            isRotating = rotating
+            isRotating = rotating,
+            started = started
         };
 
         var jobHandle = job.Schedule(this, inputDependencies);

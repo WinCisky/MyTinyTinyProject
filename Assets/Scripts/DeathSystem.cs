@@ -33,39 +33,11 @@ public class DeathSystem : ComponentSystem
                 //destroy Obstacles
                 var obj = GetEntityQuery(new ComponentType[] { typeof(ObstacleTag) });
                 EntityManager.DestroyEntity(obj);
-
-                //TODO
-                //block input
-
+                
                 //show ui -> (restart, exit)
 
                 //show score
 
-
-                //temporary -> restart
-                Entities.ForEach((ref Confusion confusion) =>
-                {
-                    //reset status
-                    confusion.currentElapsedTime = 0;
-                    confusion.wasGoingDown = true;
-                    confusion.running = true;
-                    confusion.rotate = false;
-                    confusion.speedUpTime = false;
-                    confusion.slowDownTime = false;
-                });
-                Entities.ForEach((ref CubeMovementStatus cms) =>
-                {
-                    cms.movingSpeed = 1;
-                });
-                Entities.ForEach((ref Prefabs prefabs) =>
-                {
-                    EntityManager.Instantiate(prefabs.Spawner);
-                });
-                Entities.ForEach((ref GameStatus gs) =>
-                {
-                    gs.gameStarted = true;
-                    gs.startTime = Time.ElapsedTime;
-                });
             }
         });
 

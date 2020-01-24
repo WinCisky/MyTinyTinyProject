@@ -4,8 +4,9 @@ using Unity.Mathematics;
 [GenerateAuthoringComponent]
 public struct Digit : IComponentData
 {
+    public bool mainMenu;
     public bool isActive;
-    public int shownValue;
+    public char shownValue;
     public int digit;
     public float3 offset;
     public Entity 

@@ -15,12 +15,62 @@ public class InputShow : ComponentSystem
 {
     protected override void OnUpdate()
     {
-        bool actionOne = false;
-        bool actionTwo = false;
-
 #if UNITY_DOTSPLAYER
             var Input = World.GetExistingSystem<InputSystem>();
 #endif
+
+        var started = false;
+        Entities.ForEach((ref GameStatus gs) =>
+        {
+            started = gs.gameStarted;
+        });
+
+        if (!started)
+        {
+#if !UNITY_DOTSPLAYER
+            if (Input.anyKey || Input.touchCount > 0 || Input.GetMouseButton(0))
+#else
+            if (Input.GetKey(KeyCode.Space) || Input.TouchCount() > 0 || Input.GetMouseButton(0))
+#endif
+            {
+                Entities.ForEach((ref GameStatus gs) =>
+                {
+                    gs.gameStarted = true;
+                    gs.startTime = Time.ElapsedTime;
+                });
+                Entities.ForEach((ref ObstacleTag ot) =>
+                {
+                    ot.StartTime = Time.ElapsedTime + 9;
+                });
+
+                //start
+                Entities.ForEach((ref Confusion confusion) =>
+                {
+                    //reset status
+                    confusion.currentElapsedTime = 0;
+                    confusion.wasGoingDown = true;
+                    confusion.running = true;
+                    confusion.rotate = false;
+                    confusion.speedUpTime = false;
+                    confusion.slowDownTime = false;
+                });
+                Entities.ForEach((ref CubeMovementStatus cms) =>
+                {
+                    cms.movingSpeed = 1;
+                });
+                Entities.ForEach((ref Prefabs prefabs) =>
+                {
+                    EntityManager.Instantiate(prefabs.Spawner);
+                });
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        bool actionOne = false;
+        bool actionTwo = false;
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             Entities.WithAll<Player>().ForEach((ref PlayerInput pi) => {
