@@ -50,14 +50,28 @@ Then the game was completed!
 Thank you for your interest!
 
 
-## FIXES:
+## Fixes:
 ### Compilation Error
 #### ArgumentException: The entity does not exist ...
 Open the digit prefab (Assets/Prefabs/Digit.prefab) inside Unity (modify the Shown Value to whatever you want, e.g. 0) and save it to fix the Component referenced entities.
 
 
-## TODO:
+## ToDo:
 	speed increase -> not really necessary (already challenging enough)
 	random colour for cubes player and background -> seems to be not possible currently (modifying the background value of the Camera component doesn't affect the background colour)
 
 > Bugfix (I'm not good at my own game, so it's hard to discover bugs)
+
+
+# License
+
+Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
+
+This work is licensed under a [Creative Commons Attribution 4.0 International
+License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
