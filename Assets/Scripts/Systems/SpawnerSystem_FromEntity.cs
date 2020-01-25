@@ -41,8 +41,8 @@ public class SpawnerSystem_FromEntity : JobComponentSystem
         // The actual job will be cached once it is compiled (it will only get Burst compiled once).
         var jobHandle = Entities
             .WithName("Spawner")
-            //.WithBurst(FloatMode.Default, FloatPrecision.Standard, true)
-            .WithoutBurst()
+            .WithBurst(FloatMode.Default, FloatPrecision.Standard, true)
+            //.WithoutBurst()
             .ForEach((Entity entity, int entityInQueryIndex, in Spawner spawnerFromEntity, in LocalToWorld location) =>
         {
             for (var x = -spawnerFromEntity.CountX; x < spawnerFromEntity.CountX; x++)
@@ -54,7 +54,7 @@ public class SpawnerSystem_FromEntity : JobComponentSystem
                     // Place the instantiated in a grid with some noise
 
                     var position = math.transform(location.Value,
-                        new float3(x, y, (noise.cnoise(new float2(x, y + (float)elapsedT + 9) * 0.21F) + 0.2) > 0 ? -100 : 0));
+                        new float3(x, y, (noise.cnoise(new float2(x, y + (float)elapsedT + 9) * 0.21F) + 0.22) > 0 ? -100 : 0));
                     commandBuffer.SetComponent(entityInQueryIndex, instance, new Translation {Value = position});
                     commandBuffer.SetComponent(entityInQueryIndex, instance, new ObstacleTag {StartTime = elapsedT + 9, startPos = position, MovementSpeed = 5, Swapped = true});
                 }
