@@ -16,6 +16,7 @@ public class FollowPlayerSystem : ComponentSystem
         var offset = new float3(0, 0, -25);
         var deltaTime = Time.DeltaTime;
         var cameraPos = new float3(0, 0, 0); 
+        var playerPos = new float3(0, 0, 0);
         Entities.WithAll<Player>().ForEach((ref Translation translation) =>
         {
 #if UNITY_DOTSPLAYER
@@ -26,6 +27,7 @@ public class FollowPlayerSystem : ComponentSystem
             cameraPos = UnityEngine.Camera.main.transform.position;
             cameraPos = math.lerp(cameraPos, translation.Value + offset, deltaTime * followSpeed);
 #endif
+            playerPos = translation.Value;
         });
 
         //let the ui follow the player
@@ -33,6 +35,12 @@ public class FollowPlayerSystem : ComponentSystem
         {
             if (!d.mainMenu)
                 translation.Value = cameraPos + d.offset;
+        });
+
+        //update camera pos
+        Entities.ForEach((ref PlayerPosition pp) =>
+        {
+            pp.pos = playerPos;
         });
     }
 }

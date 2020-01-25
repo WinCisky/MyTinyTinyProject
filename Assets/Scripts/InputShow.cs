@@ -36,6 +36,7 @@ public class InputShow : ComponentSystem
                 Entities.ForEach((ref GameStatus gs) =>
                 {
                     gs.gameStarted = true;
+                    gs.gameOver = false;
                     gs.startTime = Time.ElapsedTime;
                 });
                 Entities.ForEach((ref ObstacleTag ot) =>

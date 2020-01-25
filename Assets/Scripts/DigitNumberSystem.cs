@@ -15,7 +15,7 @@ public class DigitNumberSystem : ComponentSystem
 #else
                     
                 var value = ((int)digit.shownValue - (int)'0');
-                if (value >= 0 && value <= 26)
+                if (value >= 0 && value <= 9)
                 {
 #endif
                     switch (value)

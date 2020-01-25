@@ -7,6 +7,7 @@ using Unity.Mathematics;
 public struct GameStatus : IComponentData
 {
     public bool gameStarted;
+    public bool gameOver;
     public double startTime;
     public int score;
 }

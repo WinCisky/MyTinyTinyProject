@@ -9,6 +9,8 @@ public struct Digit : IComponentData
     public char shownValue;
     public int digit;
     public float3 offset;
+    public int row;
+    public int charIndex;
     public Entity 
         s1_1, s2_1, s3_1,
         s1_2, s2_2, s3_2,

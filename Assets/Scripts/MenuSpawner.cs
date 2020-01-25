@@ -8,20 +8,25 @@ using Unity.Tiny;
 
 public class MenuSpawner : ComponentSystem
 {
-    private void SetDigit(Entity instance, char c, int characters, int index, float yPos)
+    private void SetDigit(Entity instance, char c, int characters, int index, float yPos, int row)
     {
+        var pos = new float3((index - (characters / 2f)) * 0.8f, yPos, 0);
+
         var digit = EntityManager.GetComponentData<Digit>(instance);
         digit.shownValue = c;
         digit.isActive = true;
+        digit.charIndex = index;
+        digit.row = row;
+        digit.offset = new float3(pos.x, pos.y, -5);
         EntityManager.SetComponentData(instance, digit);
 
-        var pos = new float3((index - (characters / 2f)) * 0.8f, yPos, 0);
+
         EntityManager.SetComponentData(instance, new Translation() { Value = pos });
     }
 
     protected override void OnUpdate()
     {
-        Entities.ForEach((Entity entity, ref TextRow textRow, ref LocalToWorld l2w) =>
+        Entities.ForEach((Entity entity, ref TextRow textRow) =>
             {
                 switch (textRow.rowNumber)
                 {
@@ -30,7 +35,7 @@ public class MenuSpawner : ComponentSystem
                         for (int i = 0; i < 20; i++)
                         {
                             var instance = EntityManager.Instantiate(textRow.character);
-                            SetDigit(instance, s1[i], 20, i, 5);
+                            SetDigit(instance, s1[i], 20, i, 5, textRow.rowNumber);
                         }
                         break;
                     case 2:
@@ -38,7 +43,7 @@ public class MenuSpawner : ComponentSystem
                         for (int i = 0; i < 10; i++)
                         {
                             var instance = EntityManager.Instantiate(textRow.character);
-                            SetDigit(instance, s2[i], 10, i, 3);
+                            SetDigit(instance, s2[i], 10, i, 3, textRow.rowNumber);
                         }
                         break;
                     case 3:
@@ -46,7 +51,7 @@ public class MenuSpawner : ComponentSystem
                         for (int i = 0; i < 16; i++)
                         {
                             var instance = EntityManager.Instantiate(textRow.character);
-                            SetDigit(instance, s3[i], 16, i, 1);
+                            SetDigit(instance, s3[i], 16, i, 1, textRow.rowNumber);
                         }
                         break;
                     case 4:
@@ -54,7 +59,7 @@ public class MenuSpawner : ComponentSystem
                         for (int i = 0; i < 23; i++)
                         {
                             var instance = EntityManager.Instantiate(textRow.character);
-                            SetDigit(instance, s4[i], 23, i, -3);
+                            SetDigit(instance, s4[i], 23, i, -3, textRow.rowNumber);
                         }
                         break;
                     default:
@@ -62,7 +67,7 @@ public class MenuSpawner : ComponentSystem
                         for (int i = 0; i < 8; i++)
                         {
                             var instance = EntityManager.Instantiate(textRow.character);
-                            SetDigit(instance, s5[i], 8, i, -5);
+                            SetDigit(instance, s5[i], 8, i, -5, textRow.rowNumber);
                         }
                         break;
                 }

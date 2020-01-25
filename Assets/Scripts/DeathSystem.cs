@@ -1,5 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 [AlwaysSynchronizeSystem]
@@ -28,8 +30,20 @@ public class DeathSystem : ComponentSystem
                 Entities.ForEach((ref GameStatus gs) =>
                 {
                     gs.gameStarted = false;
+                    gs.gameOver = true;
                 });
 
+                //reposition score recap (main menu)
+                var cameraPos = new float3(0, 0, 0);
+                Entities.ForEach((ref PlayerPosition cp) =>
+                {
+                    cameraPos = cp.pos;
+                });
+                Entities.ForEach((ref Translation translation, ref Digit d) =>
+                {
+                    if (d.mainMenu)
+                        translation.Value = cameraPos + d.offset;
+                });
                 //destroy Obstacles
                 var obj = GetEntityQuery(new ComponentType[] { typeof(ObstacleTag) });
                 EntityManager.DestroyEntity(obj);

@@ -33,9 +33,7 @@ So i created some paths to make the game more interesting, I used the noise func
 
 
 ## TODO:
-	main menu
-	speed increase
-	score system (ui? -> is kinda distracting during the playmode)
+	speed increase -> not really necessary (already challenging enough)
 	random color for cubes player and background
 
 > Bugfix (I'm not good at my own game so it's hardto discover bugs)
