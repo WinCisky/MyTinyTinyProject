@@ -1,13 +1,13 @@
 {
-    "name": "Tiny3D.Hybrid",
+    "name": "TinyRacing.Hybrid",
     "references": [
         "Unity.Entities",
-        "Unity.Mathematics",
+        "Unity.Entities.Hybrid",
         "Unity.Jobs",
         "Unity.Burst",
-        "Unity.Entities.Hybrid",
-        "Unity.Collections",
+        "Unity.Mathematics",
         "Unity.Transforms",
+        "Unity.Collections",
         "Unity.Rendering.Hybrid",
         "Tiny3D"
     ],
